@@ -1,4 +1,4 @@
-package com.hamstercloud.shop.feature.product.list.toys;
+package com.hamstercloud.shop.feature.toys;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;

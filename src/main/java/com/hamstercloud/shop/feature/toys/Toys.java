@@ -1,22 +1,29 @@
-package com.hamstercloud.shop.feature.product.list.toys;
+package com.hamstercloud.shop.feature.toys;
 
-import com.hamstercloud.shop.Feature;
 import com.hamstercloud.common.helper.ApiResponse;
+import com.hamstercloud.shop.Feature;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 
 @Component
 @Scope("prototype")
-public class Toys extends Feature{
+public class Toys extends Feature {
 
-  public ApiResponse<List<ToyDto>> handle() {
-    List<ToyDto> toys = getToys();
+  /**
+   * Get product list of toys.
+   *
+   * @return the api response
+   */
+  public static ApiResponse<List<ToyDto>> handle() {
+    Toys toys = new Toys();
 
-    return new ApiResponse<List<ToyDto>>(toys);
+    List<ToyDto> data = toys.getToys();
+
+    return new ApiResponse<List<ToyDto>>(data);
   }
 
   private List<ToyDto> getToys() {
@@ -24,7 +31,7 @@ public class Toys extends Feature{
 
     List<Toy> toys = getToysFromSomeDataSource();
 
-    if(toys != null && !toys.isEmpty()) {
+    if (toys != null && !toys.isEmpty()) {
       toys.forEach(i -> {
         results.add(Toy.getDtoFromToy(i));
       });
@@ -92,8 +99,16 @@ public class Toys extends Feature{
       this.createdAt = createdAt;
     }
 
+    /**
+     * Create a DTO from a Toy object.
+     *
+     * @param toy The Toy object.
+     * @return the toy DTO
+     */
     public static ToyDto getDtoFromToy(Toy toy) {
-      if(toy == null) return null;
+      if (toy == null) {
+        return null;
+      }
 
       ToyDto dto = new ToyDto();
       dto.setId(toy.getId());
